@@ -34,6 +34,7 @@ module.exports.loginUser = async (req, res) => {
       token,
       name: user.name,
       profileImg: user.profileImg,
+      authorId: user._id,
     });
   } catch (e) {
     res.status(500).json({ e: "Failed to login" });
