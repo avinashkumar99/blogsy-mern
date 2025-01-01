@@ -81,7 +81,7 @@ const PostDetails = () => {
         });
     };
     fetchPost();
-  }, [id]);
+  }, [id, isLogged]);
 
   const handleDeletePost = () => {
     axiosInstance
@@ -125,7 +125,7 @@ const PostDetails = () => {
           <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 my-8">
             <Message isOpen={open} message={msg} />
             <div className="mb-6 relative flex">
-              {isOwner && isLogged && (
+              {isOwner && isLogged && !isLoading && (
                 <div className="flex absolute right-8">
                   <Button
                     color="secondary"

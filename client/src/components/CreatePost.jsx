@@ -23,7 +23,7 @@ const CreatePost = ({ apiBaseUrl }) => {
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
 
-  const [authors, setAuthors] = useState([]); // Store authors list
+  const [authors, setAuthors] = useState([]);
   const [tags, setTags] = useState([]);
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState("");
@@ -53,6 +53,10 @@ const CreatePost = ({ apiBaseUrl }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData((prev) => ({
+      ...prev,
+      author: localStorage.getItem("authorId"),
+    }));
     try {
       const payload = {
         ...formData,

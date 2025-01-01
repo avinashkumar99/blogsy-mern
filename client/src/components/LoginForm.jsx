@@ -31,6 +31,7 @@ const LoginForm = () => {
         login(res.data.token);
         localStorage.setItem("name", res.data.name);
         localStorage.setItem("profileImg", res.data.profileImg);
+        localStorage.setItem("authorId", res.data.authorId);
         setOpen(true);
         setMsg("Successfully logged in! Redirecting to home page...");
 
@@ -48,9 +49,9 @@ const LoginForm = () => {
       ...prev,
       [key]: e.target.value.trim(),
     }));
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
-  console.log(credential);
+  // console.log(credential);
 
   return (
     <div className="flex flex-row mt-0 mx-auto h-full w-full lg:w-10/11 xl:w-5/6 flex-wrap font-playfair tracking-wide flex-shrink-1">
