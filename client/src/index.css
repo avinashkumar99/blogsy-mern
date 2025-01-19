@@ -7,3 +7,145 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Cervo Neue, sans-serif;
+}
+
+body {
+  position: relative;
+}
+/* 
+.custom-hero-tag {
+  font-size: 30rem;
+} */
+
+.custom-expl {
+  position: relative;
+  border: 2px solid orange;
+  z-index: 100;
+}
+
+/* .custom-expl::before {
+  position: absolute;
+
+  width: 0;
+  content: "";
+  height: 3rem;
+  background-color: white;
+  transform: translateX(-105%);
+  top: 0;
+  left: 0.5rem;
+  border-radius: 5rem;
+  transition: all 0.7s ease-in 200ms;
+}
+
+.custom-expl:hover::before {
+  width: 20rem;
+} */
+
+.custom-nav-link-hover {
+  position: relative;
+}
+
+.custom-nav-link-hover::after {
+  content: "";
+  height: 1px;
+  width: 0px;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  background-color: aquamarine;
+  transition: all 500ms ease-in 200ms;
+}
+
+.custom-nav-link-hover:hover::after {
+  width: 100%;
+}
+
+.custom-rotated {
+  position: relative;
+  transition: all 0.1s ease-in 1200ms;
+  border-radius: 2rem;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.custom-rotated::before {
+  position: absolute;
+  content: "";
+
+  top: -0.7rem;
+  left: -1rem;
+
+  width: 7rem;
+  height: 3rem;
+  background-color: orange;
+  transform: rotateZ(-30deg);
+  transition: all 0.7s ease-in-out 0.3s;
+  border-radius: 2rem;
+  z-index: -10;
+}
+
+.custom-rotated:hover::before {
+  transform: rotateZ(0deg);
+  width: 12rem;
+  color: black;
+  top: 0.3rem;
+  left: 0;
+  background-color: #bb3b60;
+  z-index: -10;
+}
+
+.custom-radius {
+  /* color: white; */
+  background-color: #d1d1d1;
+  border-radius: 30% 17% 10% 5%;
+}
+
+.custom-running {
+  display: inline-flex;
+  /* overflow: hidden; */
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.custom-running:hover {
+  animation-play-state: paused;
+}
+
+.custom-hover-effect {
+  position: relative;
+
+  z-index: 2;
+}
+
+.custom-hover-effect::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  z-index: -1;
+  background-color: black;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out 0.3s;
+}
+
+.custom-hover-effect:hover::before {
+  height: 1.5rem;
+}

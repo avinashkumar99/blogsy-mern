@@ -77,61 +77,57 @@ const Content = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <div className="md:w-[85%] w-[94%]  mx-auto my-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className="md:w-[100%] w-full min-h-[100vh]  ps-12 py-8 bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {posts.map((post, index) => {
-              if (alter) {
-                return (
-                  <>
-                    <div
-                      className="md:col-span-3 border border-slate-400 mt-4   rounded-lg text-white"
-                      onClick={() => handlefetchPostId(post._id)}
-                    >
-                      <div className="h-70 min-w-[70%] bg-slate-50 rouded-xl relative inline-block ">
-                        <span className="z-50 h-[50px] w-[50px] rounded-full bg-white absolute p-1 top-4 left-4 border border-yellow-900">
-                          <img
-                            src={`${post.author.profileImg}`}
-                            className="w-full h-full rounded-full object-contain"
-                          />
-                        </span>
-                        <FavoriteBorderIcon className="hover:text-red-800 cursor-pointer mx-auto mt-2 absolute right-2 bottom-2" />
+              return (
+                <>
+                  <div className="col-span-1 relative mt-28">
+                    <div className="absolute top-2 left-2 text-3xl text-red-800 hover:text-red-400 cursor-pointer">
+                      <i class="fa-regular fa-heart"></i>
+                      {/* <i class="fa-solid fa-heart"></i> */}
+                    </div>
+                    <div className="absolute bottom-2 left-2">
+                      <Button
+                        variant="contained"
+                        onClick={() => handlefetchPostId(post._id)}
+                      >
+                        Read More
+                      </Button>
+                    </div>
+                    <div className="h-60 w-[80%] mr-auto shadow-lg ">
+                      <img
+                        src={`${post.img}`}
+                        className="object-cover h-full w-full"
+                      />
+                    </div>
 
+                    <div className="absolute top-0 right-32 translate-x-1/3 -translate-y-1/3  flex h-24 w-44 bg-slate-950 items-center p-4 shadow-lg z-10">
+                      <div className="h-16 w-16 rounded-full">
                         <img
-                          src={`${post.img[0]}`}
-                          className="h-full w-full object-cover  z-10"
+                          src={`${post.author.profileImg}`}
+                          className="object-cover rounded-full outline outline-red-400"
                         />
                       </div>
-                      <div className="w-auto h-40 flex flex-col px-3  justify-evenly">
-                        <h3 className="text-center text-blue-800 font-semibold ">
-                          {post.title}
-                        </h3>
-                        <p className="text-sm text-center overflow-clip text-slate-700 h-5 w-full leading-tight">
-                          {post.content}
-                        </p>
-                        {/* <CommentIcon className="hover:text-blue-300 cursor-pointer mx-auto mt-2" /> */}
-                        <div className="flex justify-between text-blue-600">
-                          <div className="flex flex-col">
-                            <div>
-                              by &nbsp;
-                              <span>{post.author.name}</span>
-                            </div>
-                            <div>
-                              <span className="text-sm text-slate-700">
-                                {new Date(post.createdAt).toLocaleDateString()}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="self-start">
-                            <Button variant="outlined" size="small">
-                              Read
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
+                      <span className="text-white font-semibold ms-2 h-auto">
+                        {post.author.name}
+                      </span>
                     </div>
-                  </>
-                );
-              }
+                    <div className="absolute bottom-0 right-32 h-32 w-[60%] translate-x-[15%]  rounded-lg shadow-lg z-10 bg-white p-4">
+                      <h3 className="text-lg font-semibold ">{post.title}</h3>
+                      <p className="text-sm h-[50%] w-full overflow-clip inline-block">
+                        {post.content}
+                      </p>
+                      {/* <span className="text-sm">...</span> */}
+                      <h4 className="text-sm text-purple-700 overflow-clip flex justify-between">
+                        {post.tag.map((e) => (
+                          <span>{`#${e} `}</span>
+                        ))}
+                      </h4>
+                    </div>
+                  </div>
+                </>
+              );
             })}
           </div>
         </div>

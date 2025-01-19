@@ -1,40 +1,71 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import heroVideo1 from "../assets/heroVideo1.mp4";
+import "../index.css";
+import RotatedBtn from "./RotatedBtn";
 
 const Hero = () => {
+  const sectionArr = ["Write. Share.", "Inspire."];
+  const [currentSection, setCurrentSection] = useState(0);
+  const [highlightProgress, setHighlightProgress] = useState(0);
+  const containerRef = useRef(null);
+  // const sectionArr = section.split(" ");
+  console.log(sectionArr);
+  const handleScroll = (e) => {
+    e.preventDefault();
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const containerHeight = containerRef.current.offsetHeight;
+    console.log(scrollPosition, containerHeight);
+    const progress = (scrollPosition / containerHeight) * sectionArr.length;
+    setHighlightProgress(() => Math.floor(progress));
+    console.log("progress ....", progress);
+  };
+
   return (
-    <div className="w-[100%] flex flex-wrap md:flex-nowrap bg-slate-100 overflow-clip custom-height">
-      {/* div for hero content */}
-      <div className="flex h-full md:w-[60%] my-auto">
-        <div className="flex flex-col w-full p-2 md:p-0 my-auto 2xl:ms-20">
-          {/* for showing offer part */}
-          <div className="text-center">
-            <h3 className="md:text-xl text-sm  font-bold lg:mb-5 mb-2">
-              <span className="rounded-3xl lg:px-10 lg:py-3 bg-white">
-                "Write. Share. Inspire."
-              </span>
-            </h3>
-          </div>
-          {/* some tags for hero section */}
-          <div className="text-center my-2 ">
-            <h1 className="font-merriweather font-extrabold text-2xl md:text-3xl lg:my-8 lg:tracking-wide">
-              "Inspiring Thoughts, One Post at a Time."
-            </h1>
-          </div>
-          {/* some paragraphs */}
-          <div className="text-center my-3">
-            <p className="font-crimson text-sm font-bold text-gray-400 md:text-lg   lg:tracking-widest">
-              Sharing Stories, Inspiring Minds.
-            </p>
-          </div>
+    <section>
+      <div className="w-[100%] flex flex-wrap md:flex-nowrap  overflow-clip custom-height">
+        <div className="h-full md:w-[60%] my-auto">
+          <figure
+            className=" p-2 md:p-0 my-auto 2xl:ms-20 relative h-[100vh] w-[100vw]"
+            onWheel={handleScroll}
+            ref={containerRef}
+          >
+            <video
+              src={heroVideo1}
+              muted
+              autoPlay
+              playsInline
+              loop
+              className="h-[100%] w-[100%] fixed top-0 left-0 overflow-hidden object-cover -z-40 transform translate-x-0 translate-y-0"
+            ></video>
+            <div className="text-center absolute top-16 left-0 bg-transparent text-7xl text-slate-500 justify-center font-extrabold h-full w-full flex flex-col p-8">
+              <div
+                className={`h-1/3 w-full ${
+                  highlightProgress >= 1
+                    ? "text-white  transition-all opacity-100 duration-500 ease-in-out"
+                    : "text-slate-500 transition-all opacity-70 duration-500 ease-in-out"
+                } `}
+              >
+                Write. Share.{" "}
+              </div>
+              {/* <div className="h-1/3 w-full">Share.</div> */}
+
+              <div
+                className={`h-1/3 w-full custom-hero-tag text-9xl ${
+                  highlightProgress >= 1.5
+                    ? "text-[#21decb] transition-all opacity-100 duration-500 ease-in-out"
+                    : "text-slate-500 transition-all opacity-70 duration-500 ease-in-out"
+                }`}
+              >
+                Inspire.
+              </div>
+              <div className="relative w-full mt-2 h-16 bg-transparent text-lg text-white flex items-center justify-center">
+                <RotatedBtn text={"CREATE NEW BLOG"} />
+              </div>
+            </div>
+          </figure>
         </div>
       </div>
-      {/* div for image content */}
-      <div className="h-full md:w-[40%] w-full md:flex md:justify-end hidden lg:block">
-        <div className="h-8/10 p-3 flex custom-hero-effect">
-          <img className="" src="/images/hero-image.jpg" />
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };
 
