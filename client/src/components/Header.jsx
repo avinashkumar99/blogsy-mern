@@ -250,10 +250,12 @@ import * as React from "react";
 import { useRef, useState, useEffect } from "react";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const Header = () => {
   const [isNavExpand, setIsNavExpand] = useState(true);
   const navButton = useRef(null);
+  const navigate = useNavigate();
 
   const handleExpandNav = (e) => {
     console.log("clikcedddddddddd");
@@ -327,6 +329,7 @@ const Header = () => {
                   variant="contained"
                   size="sm"
                   style={{ backgroundColor: "#218891" }}
+                  onClick={() => navigate("/login", {})}
                 >
                   Login
                 </Button>
