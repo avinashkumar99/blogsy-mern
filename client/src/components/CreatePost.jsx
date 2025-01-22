@@ -5,10 +5,14 @@ import Button from "@mui/material/Button";
 
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
+import AddSharpIcon from "@mui/icons-material/AddSharp";
+import { Fab } from "@mui/material";
 import axiosInstance from "../../axiosMiddleware";
 import Message from "./Message";
 import { api } from "../../constant";
 import { Backdrop, CircularProgress } from "@mui/material";
+import BlogEditor from "./BlogEditor";
+import { AddCircleOutlineSharp, AddCircleSharp } from "@mui/icons-material";
 const CreatePost = ({ apiBaseUrl }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -22,6 +26,8 @@ const CreatePost = ({ apiBaseUrl }) => {
   });
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
+  const [selectedTool, setSelectedTool] = useState(null);
+  const [addEditor, setAddEditor] = useState([]);
 
   const [authors, setAuthors] = useState([]);
   const [tags, setTags] = useState([]);
@@ -132,8 +138,27 @@ const CreatePost = ({ apiBaseUrl }) => {
     setIsImageLoading(false);
   };
 
+  useEffect(() => {
+    // state change of the tools
+    console.log("add editor,,,,,,,,,,,", addEditor);
+  }, [addEditor]);
+  const handleAddEditor = () => {
+    setAddEditor((prev) => [
+      ...prev,
+      prev.length ? prev[prev.length - 1] + 1 : 0,
+    ]);
+  };
+
+  const handleKeyDown = (e, idx) => {
+    if (e.key === "Backspace") {
+      console.log(e.key);
+      setAddEditor((prev) => prev.filter((_, index) => idx !== index));
+    }
+    console.log("not working.............");
+  };
+
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gray-100 shadow-lg rounded-md my-4">
+    <div className="max-w-3xl mx-auto p-6 bg-gray-100 shadow-lg rounded-md my-4 min-h-screen">
       {isImageLoading && (
         <Backdrop
           sx={(theme) => ({
@@ -150,8 +175,34 @@ const CreatePost = ({ apiBaseUrl }) => {
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-900">
         Create Blog Post
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Title */}
+
+      <BlogEditor placeHolder={"TITLE"} />
+      {addEditor.map((idx) => {
+        return (
+          <>
+            <BlogEditor
+              placeholder={"Write here..."}
+              sx={{ position: "relative" }}
+              key={idx}
+              id={idx}
+              onKeyDown={(e, id) => handleKeyDown(e, idx)}
+              // onKeyDown={(e) => handleKeyDown(e, idx)}
+            />
+          </>
+        );
+      })}
+      <Fab
+        color="secondary"
+        aria-label="add"
+        size="small"
+        sx={{ position: "absolute", top: "0", left: "10px" }}
+        onClick={handleAddEditor}
+      >
+        <AddSharpIcon fontSize="small" />
+      </Fab>
+
+      {/* <form onSubmit={handleSubmit} className="space-y-6">
+        
         <div>
           <TextField
             fullWidth
@@ -164,7 +215,7 @@ const CreatePost = ({ apiBaseUrl }) => {
           />
         </div>
 
-        {/* Content */}
+        
         <div>
           <TextField
             fullWidth
@@ -179,7 +230,7 @@ const CreatePost = ({ apiBaseUrl }) => {
           />
         </div>
 
-        {/* Author */}
+      
         <div>
           <TextField
             fullWidth
@@ -195,7 +246,7 @@ const CreatePost = ({ apiBaseUrl }) => {
           />
         </div>
 
-        {/* Tags */}
+        
         <div>
           <TextField
             fullWidth
@@ -220,7 +271,7 @@ const CreatePost = ({ apiBaseUrl }) => {
         </div>
 
         <div style={{ padding: "20px" }}>
-          {/* Image input field */}
+          
 
           <Button
             variant="contained"
@@ -238,7 +289,7 @@ const CreatePost = ({ apiBaseUrl }) => {
             />
           </Button>
 
-          {/* Image previews */}
+        
           <div style={{ marginTop: "1rem" }}>
             <strong>Selected Images:</strong>
             <div
@@ -257,26 +308,12 @@ const CreatePost = ({ apiBaseUrl }) => {
                       borderRadius: "8px",
                     }}
                   />
-                  {/* <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    onClick={() => handleRemoveImage(index)}
-                    style={{
-                      position: "absolute",
-                      top: "5px",
-                      right: "5px",
-                      fontSize: "10px",
-                    }}
-                  >
-                    Remove
-                  </Button> */}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Upload button */}
+          
           <Button
             variant="contained"
             color="primary"
@@ -299,7 +336,7 @@ const CreatePost = ({ apiBaseUrl }) => {
             Create Post
           </Button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };
