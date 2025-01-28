@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
+import { Tooltip } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
@@ -12,8 +12,17 @@ import Message from "./Message";
 import { api } from "../../constant";
 import { Backdrop, CircularProgress } from "@mui/material";
 import BlogEditor from "./BlogEditor";
-import { AddCircleOutlineSharp, AddCircleSharp } from "@mui/icons-material";
+import {
+  AddCircleOutlineSharp,
+  AddCircleSharp,
+  ArticleOutlined,
+  CodeOutlined,
+  DataObjectOutlined,
+  ImageOutlined,
+  VideoFileOutlined,
+} from "@mui/icons-material";
 const CreatePost = ({ apiBaseUrl }) => {
+  const editorToolRef = useRef(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -28,6 +37,7 @@ const CreatePost = ({ apiBaseUrl }) => {
   const [msg, setMsg] = useState("");
   const [selectedTool, setSelectedTool] = useState(null);
   const [addEditor, setAddEditor] = useState([]);
+  const [activeEditorTool, setActiveEditorTool] = useState(false);
 
   const [authors, setAuthors] = useState([]);
   const [tags, setTags] = useState([]);
@@ -157,8 +167,11 @@ const CreatePost = ({ apiBaseUrl }) => {
     console.log("not working.............");
   };
 
+  const handleOpenToolBox = () => {
+    setActiveEditorTool(!activeEditorTool);
+  };
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gray-100 shadow-lg rounded-md my-4 min-h-screen">
+    <div className="max-w-3xl mx-auto p-6 relative  shadow-lg rounded-md my-4 min-h-screen">
       {isImageLoading && (
         <Backdrop
           sx={(theme) => ({
@@ -180,26 +193,59 @@ const CreatePost = ({ apiBaseUrl }) => {
       {addEditor.map((idx) => {
         return (
           <>
-            <BlogEditor
-              placeholder={"Write here..."}
-              sx={{ position: "relative" }}
-              key={idx}
-              id={idx}
-              onKeyDown={(e, id) => handleKeyDown(e, idx)}
-              // onKeyDown={(e) => handleKeyDown(e, idx)}
-            />
+            <div className="relative" ref={(el) => editorToolRef[idx] === el}>
+              <BlogEditor
+                placeholder={"Write here..."}
+                sx={{ position: "relative" }}
+                key={idx}
+                id={idx}
+                onKeyDown={(e, id) => handleKeyDown(e, idx)}
+                // onKeyDown={(e) => handleKeyDown(e, idx)}
+              />
+            </div>
           </>
         );
       })}
-      <Fab
-        color="secondary"
-        aria-label="add"
-        size="small"
-        sx={{ position: "absolute", top: "0", left: "10px" }}
-        onClick={handleAddEditor}
-      >
-        <AddSharpIcon fontSize="small" />
-      </Fab>
+      {activeEditorTool && (
+        <div
+          className={`flex flex-nowrap w-auto h-12 p-2 absolute bottom-16 right-28 shadow-md rounded-sm items-center delay-100 transition-all duration-150 ease-in-out}`}
+        >
+          <Tooltip title="Add Story" arrow>
+            <ArticleOutlined
+              onClick={handleAddEditor}
+              sx={{ marginRight: "0.5rem" }}
+            />
+          </Tooltip>
+          <Tooltip title="Add Image" arrow>
+            <ImageOutlined
+              sx={{ marginRight: "0.5rem" }}
+              onClick={handleChooseImage}
+            />
+          </Tooltip>
+          <Tooltip title="Add Video" arrow>
+            <VideoFileOutlined sx={{ marginRight: "0.5rem" }} />
+          </Tooltip>
+          <Tooltip title="Embed link" arrow>
+            <CodeOutlined sx={{ marginRight: "0.5rem" }} />
+          </Tooltip>
+          <Tooltip title="Add Code Block" arrow>
+            <DataObjectOutlined />
+          </Tooltip>
+        </div>
+      )}
+
+      <Tooltip title="Add an image, video, embed or code, tag" arrow>
+        <Fab
+          color="secondary"
+          aria-label="add"
+          size="small"
+          sx={{ position: "absolute", bottom: "4rem", right: "3rem" }}
+          onClick={handleOpenToolBox}
+          ref={editorToolRef}
+        >
+          <AddSharpIcon fontSize="small" />
+        </Fab>
+      </Tooltip>
 
       {/* <form onSubmit={handleSubmit} className="space-y-6">
         

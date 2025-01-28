@@ -149,7 +149,7 @@ const PostDetails = () => {
         ) : (
           <>
             <div className="w-full p-4 my-4 relative flex justify-start flex-col md:flex-row">
-              <div className="md:ms-14 md:w-[60%] md:mr-2 bg-white shadow-lg rounded-lg p-6 my-2">
+              <div className="md:ms-14 md:w-[60%] md:mr-2 min-h-[80vh] bg-white shadow-lg rounded-lg p-6 my-2">
                 <Message isOpen={open} message={msg} />
                 <div className="mb-6 relative flex md:flex-nowrap flex-wrap">
                   {isOwner && isLogged && !isLoading && (

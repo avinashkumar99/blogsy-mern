@@ -287,7 +287,7 @@ const Header = () => {
   return (
     <header>
       {/* <div className="h-[80vh] w-[100vw] relative"> */}
-      <div className="fixed top-0 left-0 h-[100vh] w-12 items-center justify-evenly outline-dotted outline-white outline-1 bg-gray-950 flex flex-col text-white text-3xl z-50">
+      <div className="fixed top-0 left-0 h-[100vh] w-12 items-center justify-evenly outline-dotted outline-white outline-1 bg-gray-950 flex flex-col text-white text-3xl z-50 hidden">
         <span>
           <i class="fa-brands fa-square-facebook"></i>
         </span>
@@ -318,11 +318,16 @@ const Header = () => {
 
           <div
             className={`absolute w-72 -left-2 h-auto rounded-2xl flex items-center  bg-slate-50 shadow-lg transition-all duration-500 ease-in ${
-              isNavExpand ? "opacity-100 -translate-x-72" : "opacity-0 "
+              isNavExpand ? "opacity-100 -translate-x-72 " : "opacity-0  "
             }`}
           >
             <ul className=" flex flex-row items-center justify-evenly w-full py-3 px-2 font-bold">
-              <li className="custom-nav-link-hover">Create Blog</li>
+              <li
+                className="custom-nav-link-hover"
+                onClick={() => navigate("/post/create")}
+              >
+                Write Blog
+              </li>
               <li className="custom-nav-link-hover">Sign Up</li>
               <li>
                 <Button
